@@ -1,0 +1,17 @@
+
+server {
+    listen 80;
+    root usr/share/nginx/html;
+
+    location /test {
+         access_log off;
+         return 200 '${MESSAGE}';
+        add_header Content-Type text/plain;
+    }
+
+    location /api {
+        proxy_pass http://localhost:3000/;
+    }
+} 
+
+

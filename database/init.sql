@@ -1,0 +1,10 @@
+DROP DATABASE IF EXISTS TODO_DB;
+CREATE DATABASE TODO_DB;
+use TODO_DB;
+CREATE TABLE TODO (
+    id bigint(20) NOT NULL AUTO_INCREMENT,
+    description varchar(2000) DEFAULT NULL,
+    done tinyint(1) DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY todo_id_IDX (id) USING BTREE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
