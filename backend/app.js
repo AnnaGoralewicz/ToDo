@@ -15,6 +15,7 @@ var pool = db.createPool({
   database: "TODO_DB",
 });
 
+// Stackoverflow serialize BigInt in json
 BigInt.prototype["toJSON"] = function () {
   return parseInt(this.toString());
 };
@@ -36,9 +37,11 @@ app.get("/", (req, res) => {
   res.send(todo);
 });
 
+/**
+ * adding new entry
+ */
 app.post("/add", (req, res) => {
   logger.info("add new todo");
-  logger.debug(req.body);
   pool.getConnection().then((conn) => {
     conn
       .query("INSERT INTO TODO (description, done) VALUES(?, ?)", [
@@ -51,6 +54,26 @@ app.post("/add", (req, res) => {
           id: dbRes.insertId,
           description: req.body.description,
           done: false,
+        });
+      })
+      .catch((err) => {
+        logger.error(err.message);
+        res.status(500).json({ error: err.message });
+      });
+  });
+});
+
+/**
+ * listed alle todos auf
+ */
+app.get("/list", (req, res) => {
+  logger.info("list todo");
+  pool.getConnection().then((conn) => {
+    conn
+      .query("select * from TODO")
+      .then((rows) => {
+        res.json({
+          todos: rows,
         });
       })
       .catch((err) => {
