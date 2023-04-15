@@ -38,49 +38,82 @@ app.get("/", (req, res) => {
 });
 
 /**
- * adding new entry
+ * adding new entry (Create)
  */
-app.post("/add", (req, res) => {
+app.post("/add", async (req, res) => {
   logger.info("add new todo");
-  pool.getConnection().then((conn) => {
-    conn
-      .query("INSERT INTO TODO (description, done) VALUES(?, ?)", [
-        req.body.description,
-        false,
-      ])
-      .then((dbRes) => {
-        logger.info("new todo entry ");
-        res.json({
-          id: dbRes.insertId,
-          description: req.body.description,
-          done: false,
-        });
-      })
-      .catch((err) => {
-        logger.error(err.message);
-        res.status(500).json({ error: err.message });
-      });
-  });
+
+  try {
+    let conn = await pool.getConnection();
+    const dbRes = await conn.query(
+      "INSERT INTO TODO (description, done) VALUES(?, ?)",
+      [req.body.description, false]
+    );
+    res.json({
+      id: dbRes.insertId,
+      description: req.body.description,
+      done: false,
+    });
+  } catch (err) {
+    logger.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 /**
- * listed alle todos auf
+ * listed alle todos auf (Read)
  */
-app.get("/list", (req, res) => {
+app.get("/list", async (req, res) => {
   logger.info("list todo");
-  pool.getConnection().then((conn) => {
-    conn
-      .query("select * from TODO")
-      .then((rows) => {
-        res.json({
-          todos: rows,
-        });
-      })
-      .catch((err) => {
-        logger.error(err.message);
-        res.status(500).json({ error: err.message });
-      });
-  });
+  try {
+    let conn = await pool.getConnection();
+    const rows = await conn.query("select * from TODO");
+    res.json({
+      todos: rows,
+    });
+  } catch (err) {
+    logger.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ändert eintrag (Update)
+app.post("/update", async (req, res) => {
+  logger.info("Update todo");
+
+  try {
+    let conn = await pool.getConnection();
+    const dbRes = await conn.query(
+      " UPDATE TODO SET description=? , done= ? WHERE id=?",
+      [req.body.description, req.body.done, req.body.id]
+    );
+    res.json({
+      id: req.body.id,
+      description: req.body.description,
+      done: req.body.done,
+    });
+  } catch (err) {
+    logger.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ändert eintrag (Delete)
+app.delete("/delete", async (req, res) => {
+  logger.info("Update todo");
+
+  try {
+    let conn = await pool.getConnection();
+    const dbRes = await conn.query(" DELETE FROM TODO  WHERE id=?", [
+      req.body.id,
+    ]);
+    res.json({
+      status: "OK",
+    });
+  } catch (err) {
+    logger.error(err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.listen(port, () => {

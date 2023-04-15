@@ -1,0 +1,35 @@
+
+# C R U D Test
+### adding new entry Create
+POST http://localhost:3000/add HTTP/1.1
+content-type: application/json
+
+{
+    "description":"test task"
+}
+
+
+#### get todo list Read
+GET http://localhost:3000/list HTTP/1.1
+content-type: application/json
+
+
+### adding new entry Update
+POST http://localhost:3000/update HTTP/1.1
+content-type: application/json
+
+{
+    "id":1,
+    "description":"Neuer Task",
+    "done":true
+}
+
+### delete  entry Delete
+delete http://localhost:3000/delete HTTP/1.1
+content-type: application/json
+
+{
+    "id":3
+   
+}
+
