@@ -20,7 +20,7 @@ content-type: application/json
 
 {
     "id":1,
-    "description":"Neuer Task",
+    "description":"Neuer Task für Barny",
     "done":true
 }
 

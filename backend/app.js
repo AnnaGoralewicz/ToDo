@@ -6,12 +6,15 @@ const app = express();
 const port = 3000;
 
 var db = require("mariadb");
+var cors = require("cors");
+app.use(cors());
 
 var pool = db.createPool({
   connectionLimit: 10,
-  host: "localhost",
-  user: "root",
-  password: "secret",
+  idleTimeout: 30,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PWD,
   database: "TODO_DB",
 });
 
@@ -21,21 +24,6 @@ BigInt.prototype["toJSON"] = function () {
 };
 
 app.use(express.json());
-
-app.get("/", (req, res) => {
-  logger.info("req get");
-  const todo = {
-    todos: [
-      { id: 1, text: "test", done: false },
-      { id: 1, text: "test", done: false },
-      { id: 1, text: "test", done: false },
-      { id: 1, text: "test", done: true },
-      { id: 1, text: "test", done: true },
-    ],
-  };
-
-  res.send(todo);
-});
 
 /**
  * adding new entry (Create)
@@ -54,6 +42,7 @@ app.post("/add", async (req, res) => {
       description: req.body.description,
       done: false,
     });
+    conn.end();
   } catch (err) {
     logger.error(err.message);
     res.status(500).json({ error: err.message });
@@ -71,6 +60,8 @@ app.get("/list", async (req, res) => {
     res.json({
       todos: rows,
     });
+
+    conn.end();
   } catch (err) {
     logger.error(err.message);
     res.status(500).json({ error: err.message });
@@ -92,6 +83,7 @@ app.post("/update", async (req, res) => {
       description: req.body.description,
       done: req.body.done,
     });
+    conn.end();
   } catch (err) {
     logger.error(err.message);
     res.status(500).json({ error: err.message });
@@ -110,6 +102,7 @@ app.delete("/delete", async (req, res) => {
     res.json({
       status: "OK",
     });
+    conn.end();
   } catch (err) {
     logger.error(err.message);
     res.status(500).json({ error: err.message });
