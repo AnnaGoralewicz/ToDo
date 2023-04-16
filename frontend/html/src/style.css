@@ -1,0 +1,70 @@
+:root {
+    --background-prim: #2A2F4F;
+    --background-sec: #917FB3;
+    --primary:#E5BEEC;
+    --secondary: #FDE2F3;
+
+}
+
+body{
+    background-color: var(--background-prim);
+    color: antiquewhite;
+}
+
+h1{
+    text-align: center;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    display: flex;
+    background-color: var(--background-sec);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+input {
+    width: 100%;
+    color: antiquewhite;
+    border: 1px solid var(--background-prim);
+    border-radius: 5px;
+    height: 30px;
+    background-color: var(--background-sec);
+}
+
+input:hover {
+    border: 1px solid var(--secondary);
+}
+
+ 
+
+button {
+   background-color: var(--primary);
+   border: none;
+   border-radius: 5px;
+   height: 30px;
+}
+
+button:hover{
+    background-color: var(--secondary);
+}
+
+table {
+   
+  width: 100%;
+}
+
+ .col-first {
+    width:40px;
+ }
+.col-second {
+ 
+  width: 90%;
+  
+}
+

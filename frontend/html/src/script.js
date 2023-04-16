@@ -1,4 +1,5 @@
-const endpoint = "http://localhost:3000";
+//const endpoint = "http://localhost:3000";
+const endpoint = "api/";
 
 function loadToDos() {
   fetch(endpoint + "/list")

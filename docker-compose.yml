@@ -8,14 +8,22 @@ services:
   
   backend:
     build: ./backend
-    ports:
-      - "3000:3000"
     environment:
       - DB_HOST=database
       - DB_USER=root
       - DB_PWD=secret
     depends_on:
       - database
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    environment:
+      - MESSAGE="Hallo Welt"
+      - BACKEND_ENDPOINT="http://backend:3000/"
+    depends_on:
+      - backend
 
       
     

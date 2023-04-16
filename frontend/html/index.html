@@ -10,19 +10,31 @@
     <title>ToDo</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="" />
+    <link rel="stylesheet" href="src/style.css" />
   </head>
   <body onload="loadToDos()">
-    <h1>ToDo's</h1>
-    <div>
-      <input id="task" type="text" />
-      <button onclick="addNewItem()">Add</button>
-    </div>
-    <div>
-      <table id="todolist"></table>
-    </div>
-    <div>
-      <table id="todolist_done"></table>
+    <div class="app">
+      <h1>ToDo's</h1>
+
+      <div class="card">
+        <input id="task" type="text" />
+        <button onclick="addNewItem()">Add</button>
+      </div>
+      <div class="card">
+        <colgroup>
+          <col class="col-first" />
+          <col class="col-second" />
+          <col class="col-third" />
+        </colgroup>
+        <table id="todolist">
+          <tbody id="todolist_done"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <table>
+          <tbody id="todolist_done"></tbody>
+        </table>
+      </div>
     </div>
     <script src="src/script.js"></script>
   </body>
