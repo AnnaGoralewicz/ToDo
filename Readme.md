@@ -32,3 +32,12 @@ To start the application:
 ```:bash
 docker-compose up -d
 ```
+
+after all containers are started the application is avalable on
+
+
+```
+http://<host>:8080
+```
+
+the Port could be changed in the docker-compose.yml file.
