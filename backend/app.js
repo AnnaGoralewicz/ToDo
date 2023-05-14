@@ -25,6 +25,18 @@ BigInt.prototype["toJSON"] = function () {
 
 app.use(express.json());
 
+app.get("/status", async (req, res) => {
+  function pad(s) {
+    return (s < 10 ? "0" : "") + s;
+  }
+  let uptime = process.uptime();
+  let hours = Math.floor(uptime / (60 * 60));
+  let minutes = Math.floor((uptime % (60 * 60)) / 60);
+  let seconds = Math.floor(uptime % 60);
+  let result = { uptime: pad(hours) + ":" + pad(minutes) + ":" + pad(seconds) };
+  logger.info(result);
+  res.json(result);
+});
 /**
  * adding new entry (Create)
  */
