@@ -7,14 +7,14 @@ The aim of this application is just to demonstrate how to use Docker for develop
 ## Structure
 
 The project is structured in three parts:
-frontend
-backend
-database
+frontend,
+backend and
+database.
 Each folder contains a docker file and is a single container.
 
 ### Frontend
 
-Is uses nginx as a web server and a reverse proxy to server the single page application (SPA) and also gives seamless access to the backend API.
+Is useing nginx as a web server and a reverse proxy to serve the single page application (SPA) and also gives seamless access to the backend API.
 
 ### Backend
 
